@@ -51,6 +51,17 @@ async fn main() -> anyhow::Result<()> {
 
 async fn send(filename: &str) -> anyhow::Result<()> {
     println!(".....  this is toss ....  ");
+
+    let path = std::path::Path::new(filename);
+    if !path.exists() {
+        println!("Error: '{filename}' does not exist in this directory.");
+        return Ok(());
+    }
+    if !path.is_file() {
+        println!("Error: '{filename}' is not a file.");
+        return Ok(());
+    }
+
     let endpoint = Endpoint::bind(presets::N0).await?;
     let store = MemStore::new();
 
@@ -76,6 +87,13 @@ async fn send(filename: &str) -> anyhow::Result<()> {
 
 async fn receive(passcode: &str, filename: &str) -> anyhow::Result<()> {
     println!(".....  this is toss ....  ");
+
+    let out_path = std::path::Path::new(filename);
+    if out_path.exists() {
+        println!("Error: '{filename}' already exists here. Rename it, move it, or pick a different output name and try again.");
+        return Ok(());
+    }
+
     let endpoint = Endpoint::bind(presets::N0).await?;
     let store = MemStore::new();
 
