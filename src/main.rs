@@ -107,6 +107,6 @@ async fn receive(passcode: &str, filename: &str) -> anyhow::Result<()> {
 
     let abs_path = std::path::absolute(filename)?;
     store.blobs().export(ticket.hash(), abs_path).await?;
-    println!("🎯 Success! Stored incoming data as '{filename}'");
+    println!("Success! Stored incoming data as '{filename}'");
     Ok(())
 }
